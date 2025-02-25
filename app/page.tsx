@@ -11,14 +11,16 @@ type Task = {
 export default function Home() {
   const [tasks, setTasks] = useState(() => {
     // read data from localstorage
-    const savedTasks = localStorage.getItem('tasks');
-    return savedTasks ? JSON.parse(savedTasks) : [];
+    if (typeof window != undefined) {
+      const savedTasks = localStorage.getItem('tasks')
+    }
+    return savedTasks ? JSON.parse(savedTasks) : []
   })
   const [newTask, setNewTask] = useState("")
 
   useEffect(() => {
     // save data after every change of tasks state
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    localStorage.setItem('tasks', JSON.stringify(tasks))
   }, [tasks]);
 
   // adding new tasks
@@ -28,7 +30,7 @@ export default function Home() {
       text,
       completed: false,
     };
-    setTasks([...tasks, newTask]);
+    setTasks([...tasks, newTask])
     setNewTask("")
   };
 
