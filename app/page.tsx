@@ -9,13 +9,17 @@ type Task = {
 }
 
 export default function Home() {
-  const [tasks, setTasks] = useState(() => {
-    // read data from localstorage
+  const [tasks, setTasks] = useState<Task[]>([])
+    // check if code is running in browser read data from localstorage
+  useEffect(() => {
     if (typeof window != undefined) {
       const savedTasks = localStorage.getItem('tasks')
-      return savedTasks ? JSON.parse(savedTasks) : []
+      if (savedTasks) {
+        setTasks(JSON.parse(savedTasks))
+      }
     }
-  })
+  }, [])
+
   const [newTask, setNewTask] = useState("")
 
   useEffect(() => {
@@ -47,7 +51,7 @@ export default function Home() {
   }
 
   const handleCheckboxChange = (id: number) => {
-    setTasks(tasks.map((task: { id: number; completed: boolean; }) => 
+    setTasks(tasks.map((task: Task) => 
       task.id === id ? { ...task, completed: !task.completed } : task
     ));
   };
