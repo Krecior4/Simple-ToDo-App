@@ -13,8 +13,8 @@ export default function Home() {
     // read data from localstorage
     if (typeof window != undefined) {
       const savedTasks = localStorage.getItem('tasks')
+      return savedTasks ? JSON.parse(savedTasks) : []
     }
-    return savedTasks ? JSON.parse(savedTasks) : []
   })
   const [newTask, setNewTask] = useState("")
 
